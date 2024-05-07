@@ -25,4 +25,12 @@ RSpec.describe StringCalculator do
       expect(subject.calculate).to eq(6)
     end
   end
+
+  context 'with n numbers' do
+    let(:input) { (1...100).to_a.join(',') }
+
+    it 'returns the sum of the numbers' do
+      expect(subject.calculate).to eq(4950)
+    end
+  end
 end
