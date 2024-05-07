@@ -5,7 +5,8 @@ class StringCalculator
 
   def calculate
     return 0 if @string_numbers.empty?
-    raise 'Invalid input' if @string_numbers.include? ',\n'
+
+    raise 'Invalid input' if @string_numbers.match?(/,\\n|\\n,/)
 
     @string_numbers.split(',').map(&:to_i).inject(:+)
   end

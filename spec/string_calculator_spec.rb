@@ -34,7 +34,14 @@ RSpec.describe StringCalculator do
     end
   end
 
-  context 'with invalid input' do
+  context 'with invalid input like ,\n' do
+    let(:input) { '1,\n' }
+    it 'raises an error' do
+      expect { subject.calculate }.to raise_error('Invalid input')
+    end
+  end
+
+  context 'with invalid input like \n,' do
     let(:input) { '1,\n' }
     it 'raises an error' do
       expect { subject.calculate }.to raise_error('Invalid input')
