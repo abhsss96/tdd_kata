@@ -33,4 +33,11 @@ RSpec.describe StringCalculator do
       expect(subject.calculate).to eq(4950)
     end
   end
+
+  context 'with invalid input' do
+    let(:input) { '1,\n' }
+    it 'raises an error' do
+      expect { subject.calculate }.to raise_error('Invalid input')
+    end
+  end
 end
