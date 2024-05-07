@@ -4,6 +4,8 @@ class StringCalculator
   end
 
   def calculate
-    0 if @string_numbers.empty?
+    return 0 if @string_numbers.empty?
+
+    @string_numbers.split(',').map(&:to_i).inject(:+)
   end
 end
