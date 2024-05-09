@@ -61,4 +61,11 @@ RSpec.describe StringCalculator do
       expect(subject.calculate).to eq(3)
     end
   end
+
+  context 'with a negative number' do
+    let(:input) { '1,2,3,-4' }
+    it 'raises an error' do
+      expect { subject.calculate }.to raise_error('negative numbers not allowed -4')
+    end
+  end
 end
