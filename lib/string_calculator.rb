@@ -13,7 +13,7 @@ class StringCalculator
     validate_string!
     @numbers = @numbers_string.split(@delimiter).map(&:to_i)
     validate_numbers!
-
+    skip_number_greater_than_one_thousand!
     @numbers.inject(:+)
   end
 
@@ -21,6 +21,10 @@ class StringCalculator
     return if negative_numbers.none?
 
     raise "negative numbers not allowed #{negative_numbers.join(',')}"
+  end
+
+  def skip_number_greater_than_one_thousand!
+    @numbers.reject! { |n| n > 1000 }
   end
 
   def negative_numbers

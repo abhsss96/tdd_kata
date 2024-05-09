@@ -75,6 +75,13 @@ RSpec.describe StringCalculator do
         expect { subject.calculate }.to raise_error('negative numbers not allowed -4,-5')
       end
     end
+
+    context 'with numbers greater than 1000' do
+      let(:input) { '1001,2' }
+      it 'skips numbers greater than 1000' do
+        expect(subject.calculate).to eq(2)
+      end
+    end
   end
 
   context 'with custom delimiter' do
@@ -133,6 +140,20 @@ RSpec.describe StringCalculator do
       let(:input) { '//;\n1;2;3;-4;-5' }
       it 'raises an error' do
         expect { subject.calculate }.to raise_error('negative numbers not allowed -4,-5')
+      end
+    end
+
+    context 'with numbers greater than 1000' do
+      let(:input) { "//;\n1001;2" }
+      it 'skips numbers greater than 1000' do
+        expect(subject.calculate).to eq(2)
+      end
+    end
+
+    context 'with delimiter of any length' do
+      let(:input) { "//***\n1***2***3" }
+      it 'returns the sum of the numbers' do
+        expect(subject.calculate).to eq(6)
       end
     end
   end
