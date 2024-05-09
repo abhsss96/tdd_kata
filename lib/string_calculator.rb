@@ -4,28 +4,39 @@ class StringCalculator
   def initialize(numbers_string)
     @numbers_string = numbers_string
     @delimiter = /[,\\n]/
+    @numbers = []
   end
 
   def calculate
     return 0 if @numbers_string.empty?
+
+    validate_string!
+    @numbers = @numbers_string.split(@delimiter).map(&:to_i)
+    validate_numbers!
+
+    @numbers.inject(:+)
+  end
+
+  def validate_numbers!
+    return if negative_numbers.none?
+
+    raise "negative numbers not allowed #{negative_numbers.join(',')}"
+  end
+
+  def negative_numbers
+    @numbers.select(&:negative?)
+  end
+
+  def validate_string!
     raise 'Invalid input' if @numbers_string.match?(/,\\n|\\n,/)
+    return unless @numbers_string.start_with?('//')
+    raise 'invalid input' unless matched_string
 
-    if @numbers_string.start_with?('//')
-      # require 'pry'
-      # binding.pry
-      match = @numbers_string.match(REGEX)
-      raise 'invalid input' unless match
+    @delimiter = matched_string[1]
+    @numbers_string = matched_string[3]
+  end
 
-      @delimiter = match[1]
-
-      @numbers_string = match[3]
-    end
-
-    numbers = @numbers_string.split(@delimiter).map(&:to_i)
-
-    negative_numbers = numbers.select(&:negative?)
-    raise "negative numbers not allowed #{negative_numbers.join(',')}" unless negative_numbers.none?
-
-    numbers.inject(:+)
+  def matched_string
+    @numbers_string.match(REGEX)
   end
 end
