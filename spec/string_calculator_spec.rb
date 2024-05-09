@@ -47,4 +47,18 @@ RSpec.describe StringCalculator do
       expect { subject.calculate }.to raise_error('Invalid input')
     end
   end
+
+  context 'with newline character and comma separated numbers' do
+    let(:input) { '1\n2,3' }
+    it 'returns the sum of the numbers' do
+      expect(subject.calculate).to eq(6)
+    end
+  end
+
+  context 'with delimiter specified' do
+    let(:input) { "//;\n1;2" }
+    it 'returns the sum of the numbers' do
+      expect(subject.calculate).to eq(3)
+    end
+  end
 end
